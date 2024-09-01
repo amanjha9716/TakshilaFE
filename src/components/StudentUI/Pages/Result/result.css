@@ -1,0 +1,61 @@
+.resultcont{
+    width: 100%;
+    display: flex;
+
+}
+.pos h2{
+    font-size: 18px;
+    font-weight: bold;
+    /* color: red; */
+    text-align: center;
+}
+.resgrp ,.pos{
+    border-radius: 20px;
+    margin-left: 10px;
+    padding: 20px;
+    width: 50%;
+    background-color: white;
+    flex-grow: 1;
+
+}
+
+.resultcont td, .resultcont th {
+    font-weight: 300;
+    font-size: 14px;
+    /* border: 1px solid #ddd; */
+    padding: 4px;
+  }
+  
+  .resultcont tr:nth-child(even){background-color: #f2f2f2;}
+  
+  .resultcont tr:hover {background-color: #ddd;}
+  
+  .resultcont th {
+    /* padding-top: 12px; */
+    /* padding-bottom: 12px; */
+    text-align: left;
+    background-color: #22284a;
+    color: white;
+  }
+  .resultcont td{
+    font-size: 12px;
+  }
+  .resultcont table{
+    height: 40%;
+  }
+  .feedback{
+    display: flex;
+    width: 100%;
+    font-size: .75rem;
+  }
+  .teacher{
+    padding: 5px;
+    /* background-color: #dddddd86; */
+    /* width:50%; */
+  }
+  .review{
+    width: 70%;
+    display: flex;
+    align-items: center;
+
+  }

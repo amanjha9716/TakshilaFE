@@ -1,0 +1,31 @@
+
+.about{
+    background-image: url('https://images.pexels.com/photos/210144/pexels-photo-210144.jpeg?auto=compress&cs=tinysrgb&w=1260');
+    background-position: center;
+    background-size: cover;
+    height: 60vh;
+    display: flex;
+    padding-bottom: 50px;
+    justify-content: center;
+    align-items: end;
+    font-family: "poppins",sans-serif;
+}
+.about>span{
+    background: rgba( 255, 255, 255, 0.15 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.15 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    color:white;
+    padding: 20px;
+    
+}
+.about>span>h1{
+    font-size: 40px;
+    color:white;
+}
+.about-content{
+    font-family: 'poppins',sans-serif;
+    padding: 50px;
+}

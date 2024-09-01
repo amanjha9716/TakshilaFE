@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.landing{
+    background-image: url('/src/assets/bg.jpg');
+    background-position: center;
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+
+}
+h1{
+    margin:0;
+    font-size: 25px;
+    color: rgb(56, 55, 55);
+}
+i{
+    margin-right: 5px;
+}
+.navbar{
+    padding: 7px;
+    align-items: center;
+    z-index: 1;
+    font-family: 'poppins',sans-serif;
+    display: flex;
+    position: fixed;
+    margin: 20px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+   background-color: white;
+   color :black; 
+   width: 90%;
+   border-radius: 10px;
+   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.navbar >ul{
+    align-items: center;
+    width: 55%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.navbar li{
+    color: rgb(56, 55, 55);
+
+    text-decoration: none;
+    list-style: none;
+    padding: 5px;
+    transition:.1s linear;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.navbar li:hover{
+    background-color: rgb(206, 177, 177);
+    /* font-weight: bold; */
+    cursor: pointer;
+    color: white;
+    transform: scale(1.05);
+}
+.landingdiv{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.maintext{
+    font-family: "Poppins", sans-serif;
+    background: rgba( 255, 255, 255, 0.35 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    color:white;
+    text-align: center;
+    padding: 50px;
+    width: 50vw;
+    height: 30vh;
+    font-size: 40px;
+    font-weight: bolder;
+    
+}
+.maintext>button{
+    background-color: white;
+    border: 0;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.navbar button{
+    background-color: rgba(128, 128, 128, 0.08);
+    border: 0;
+    font-size: 15px;
+    padding: 10px;
+
+    /* color: red; */
+
+}
+
+
+.navbar button:hover,.maintext>button:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}

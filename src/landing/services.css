@@ -1,0 +1,49 @@
+.services{
+    /* background-color: #f2f1eb41; */
+    height: 100vh;
+    font-family:"poppins",sans-serif;
+    /* position: relative; */
+    background-image: url('https://images.pexels.com/photos/66284/winter-nature-season-trees-66284.jpeg?auto=compress&cs=tinysrgb&w=1260');
+    background-position: center;
+    background-size: cover;
+}
+.services>h1{
+    color:gray;
+    text-align: center;
+    font-size: 3rem;
+padding-top:30px ;
+    /* position:absolute; */
+
+}
+.cardcont{
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card{
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.913);
+    width: 35%;
+    margin-right: 50px;
+    height: 70vh;
+    padding: 10px;
+    text-align: left;
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.35 );
+
+}
+.card >img{
+    border-radius: 5px;
+margin-bottom: 10px;
+    width: 100%;
+    height: 60%;
+}
+.card >p{
+    padding-left: 20px;
+    font-size: 12px;
+
+    color: grey;
+}
+.card>h1{
+    padding-left: 20px;
+}

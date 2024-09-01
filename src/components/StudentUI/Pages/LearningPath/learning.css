@@ -1,0 +1,131 @@
+.resource h1,
+.helpdesk h1 {
+    text-align: center;
+    margin: 10px;
+
+}
+
+.resource,
+.helpdesk {
+    width: 50%;
+    /* flex-grow: 1; */
+    margin: 10px;
+    margin-top: 0;
+    margin-bottom: 5px;
+
+    border-radius: 20px;
+
+    background-color: white;
+    flex-grow: 1;
+}
+
+.helpdesk {
+    /* display: flex; */
+}
+
+.inputgrp {
+    display: flex;
+    /* width: 100%; */
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
+}
+.answersection {
+    background-image: linear-gradient(#22284aef,#22284aef),
+                      url('../../../../../public/background.jfif');
+    /* background-size: cover; Ensure the image covers the entire area */
+    background-position: center;
+    background-blend-mode: darken; /* Blend the dark gradient with the image */
+    margin: 20px;
+    flex-grow: 1;
+    font-size: .75rem;
+    /* border: 2px solid #ff7300; */
+    height: 75%;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    border-radius: 20px;
+    color: white;
+
+}
+
+
+.inputgrp input {
+    flex-grow: 1;
+    border: 2px solid #ff7300;
+    border-right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 10px;
+    color: grey;
+    font-weight: 600;
+}
+
+.inputgrp button {
+    width: 80px;
+    /* border-top-right-radius: 0px; */
+    background-color: #ff7300;
+    color: white;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    font-size: 1.15rem;
+    font-weight: bold;
+    border: 2px solid #ff7300;
+
+}
+
+.inputgrp button:hover {
+    background-color: white;
+    color: #ff7300;
+    transition: .5s;
+}
+
+.learn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.answersection img {
+
+    height: fit-content;
+}
+.answersection .text{
+    /* From https://css.glass */
+/* background-color: grey; */
+padding: 5px;
+margin: 10px;
+/* background: #22284a; */
+/* width: 500px; */
+/* width: 40%; */
+}
+.assesment{
+    background-color: #f7f7f7;
+    height: 80px;
+    margin-top: 10px;
+    border-radius: 10px;
+    display: flex;
+    width: 92%;
+}
+.assesment a{
+    /* color: orange; */
+    font-size: 12px;
+    text-decoration: none;
+}
+.assesment a i{
+    color: orange;
+
+}
+.pdf{
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+flex-direction: column;
+    /* padding: 20px; */
+}
+.pdf img{
+    height: 100%;
+}
