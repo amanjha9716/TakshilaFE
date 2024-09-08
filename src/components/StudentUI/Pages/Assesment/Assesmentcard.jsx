@@ -58,7 +58,7 @@ export default function Assesmentcard({assename,date,totalstud,assesid}) {
                 >
                   No of student's enrolled:{totalstud}
                 </p>
-                <Link to={`test/123`}>
+                <Link to={`/test/${assesid}`}>
                   Open <i class="fa-solid fa-circle-chevron-right"></i>
                 </Link>
               </span>

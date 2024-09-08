@@ -11,7 +11,9 @@ import NextTopic from './NextTopic';
 import UpcEvent from './UpcEvent';
 import Modal from './Modal';
 import './dashboard.css'
-
+import { useQuery } from '@tanstack/react-query';
+import { HashLoader } from 'react-spinners';
+import Loader from '../Loader';
 function transformData(input) {
     const result = [];
     let avg = 0;
@@ -32,15 +34,35 @@ function transformData(input) {
     avg = count ? avg / count : 0;
     return { avg, result };
 }
-
+async function fetchFunc(url)
+{
+    let res=await fetch(url);
+    res=await res.json();
+    return res;
+    
+}
 export default function Dashboard() {
     
-    const ctx = useContext(DataContext);
     const month = useRef();
     const [avg, setAvg] = useState(0);
-    const [user, setUser] = useState(useRouteLoaderData("student"));
-  
-    const {resdata,data:nexttopic,notif} = useLoaderData();
+    const itemStr = localStorage.getItem("userData");
+    const item = JSON.parse(itemStr);
+    const user = JSON.parse(item.value);
+    const {data:resdata,isLoading:resisloading,isError:resiserr,Error:reserr}=useQuery({
+        queryKey:['resdata',user.username],
+        queryFn:()=>fetchFunc(`https://www.takshilabackend.somee.com/api/Results/get4result?username=${user.username}`)
+    })
+    const {data:nexttopic,isLoading:nextisloading,isError:nextiserr,Error:nexterr}=useQuery({
+        queryKey:['nextdata',user.stand],
+        queryFn:()=>fetchFunc(`https://www.takshilabackend.somee.com/api/Learning/getTopic?stan=${user.stand}`)
+
+    })
+    const {data:notif,isLoading:notisloading,isError:notiserr,Error:noterr}=useQuery({
+        queryKey:['notdata',user.stand],
+        queryFn:()=>fetchFunc(`https://www.takshilabackend.somee.com/api/Students/notification?stan=${user.stand}`)
+
+    })
+
     const { data } = useData();
     const [mapdata, setMapdata] = useState([]);
     const [cur, setCur] = useState('Overall');
@@ -93,8 +115,11 @@ export default function Dashboard() {
             }
         });
     });
+    
+    // console.log(notif);
     return (
-        <>
+        notisloading||resisloading||nextisloading?(<Loader/>):
+        (<>
             <div className="second" >
                 <div className="header" style={{ display: 'flex' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -108,7 +133,8 @@ export default function Dashboard() {
                         <div className="notif" style={{display:'flex'}}>
                         <i className="fa-solid fa-bell" onClick={openModal}></i>
                             <div className='count' > 
-                                {notif.length}
+                            
+                                {notisloading?'': notif.length}
                             </div>
                         </div>
                         {isModalOpen && (
@@ -203,19 +229,8 @@ export default function Dashboard() {
                 </div>
             </div>
         </>
+        )
     );
 }
 
-export async function dashboardloader() {
-    const itemStr = localStorage.getItem("userData");
-    const item = JSON.parse(itemStr);
-    const user = JSON.parse(item.value);
-    const response = await fetch(`https://www.takshilabackend.somee.com/api/Learning/getTopic?stan=${user.stand}`);
-  var resdata=await fetch(`https://www.takshilabackend.somee.com/api/Results/get4result?username=${user.username}`);
-        
-  var notif=await fetch(`https://www.takshilabackend.somee.com/api/Students/notification?stan=${user.stand}`);
-  notif=await notif.json();
-resdata=await resdata.json();
-    const data = await response.json();
-    return {data,resdata,notif};
-}
+

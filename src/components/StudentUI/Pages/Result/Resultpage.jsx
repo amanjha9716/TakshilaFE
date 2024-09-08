@@ -1,11 +1,56 @@
-import React from 'react'
-import { PieChart } from '@mui/x-charts'
-import './result.css'
-import Feedback from './Feedback.jsx'
-import { useLoaderData } from 'react-router-dom'
+import React from 'react';
+import { PieChart } from '@mui/x-charts';
+import './result.css';
+import Feedback from './Feedback.jsx';
+import { useQuery } from '@tanstack/react-query';
+import Loader from '../Loader.jsx';
+
+async function fetchData(url) {
+  const response = await fetch(url);
+  return response.json();
+}
+
+async function fetchAvg(url) {
+  const response = await fetch(url);
+  const resdata = await response.json();
+
+  const averagesArray = {};
+
+  resdata.forEach(subject => {
+    const { value } = subject;
+    const sum = Object.values(value).reduce((total, num) => total + (num || 0), 0);
+    const count = Object.values(value).filter(num => num != null).length;
+    const average = count ? sum / count : 0;
+    averagesArray[subject.key] = average;
+  });
+
+  return { resdata, averagesArray };
+}
 
 function Resultpage() {
-  const { resdata, averagesArray,posdata } = useLoaderData();
+  const itemStr = localStorage.getItem("userData");
+  const item = JSON.parse(itemStr);
+  const user = JSON.parse(item.value);
+
+  const { data: posdata, isLoading: posisloading, isError: posiserr } = useQuery({
+    queryKey: ['posdata', user.username],
+    queryFn: () => fetchData(`https://www.takshilabackend.somee.com/api/Results/position?username=${user.username}`)
+  });
+
+  const { data: avg, isLoading: avgisloading, isError: avgiserr } = useQuery({
+    queryKey: ['avgdata', user.username],
+    queryFn: () => fetchAvg(`https://www.takshilabackend.somee.com/api/Results/getquarterlyresult?username=${user.username}`)
+  });
+
+  if (posisloading || avgisloading) {
+    return <Loader />;
+  }
+
+  if (posiserr || avgiserr) {
+    return <div>Error loading data</div>;
+  }
+
+  const { resdata, averagesArray } = avg;
 
   return (
     <div className="resultcont">
@@ -39,23 +84,21 @@ function Resultpage() {
         <p className='heading'>Average subject wise marks</p>
 
         <PieChart
-          series={[
-            {
-              data: Object.entries(averagesArray).map(([subject, average], id) => ({
-                id,
-                label: subject,
-                value: average
-              })),
-              innerRadius: 30,
-              outerRadius: 80,
-              paddingAngle: 5,
-              cornerRadius: 5,
-              startAngle: -90,
-              endAngle: 180,
-              cx: 150,
-              cy: 100,
-            },
-          ]}
+          series={[{
+            data: Object.entries(averagesArray).map(([subject, average], id) => ({
+              id,
+              label: subject,
+              value: average
+            })),
+            innerRadius: 30,
+            outerRadius: 80,
+            paddingAngle: 5,
+            cornerRadius: 5,
+            startAngle: -90,
+            endAngle: 180,
+            cx: 150,
+            cy: 100,
+          }]}
           width={400}
           height={250}
         />
@@ -64,27 +107,25 @@ function Resultpage() {
         <h2>Student Performance Summary</h2>
         <div className="summary-component" style={{ width: "97%" }}>
           <ul>
-        
-              <li>
-                <strong>Number of Tests Attempted:</strong> <span>{posdata.data[0].total}</span>
-              </li>
-              <li>
-                <strong>Number of Tests Passed:</strong> <span>{posdata.data[0].pass}</span>
-              </li>
-              <li>
-                <strong>Number of Tests Failed:</strong> <span>{posdata.data[0].fail}</span>
-              </li>
-              <li>
-                <strong>Rank of Student:</strong> <span>{posdata.posi}</span>
-              </li>
-              <li>
-                <strong>Weakest Subject:</strong> <span>Mathematics</span>
-              </li>
-            </ul>
-         
+            <li>
+              <strong>Number of Tests Attempted:</strong> <span>{posdata.data[0].total}</span>
+            </li>
+            <li>
+              <strong>Number of Tests Passed:</strong> <span>{posdata.data[0].pass}</span>
+            </li>
+            <li>
+              <strong>Number of Tests Failed:</strong> <span>{posdata.data[0].fail}</span>
+            </li>
+            <li>
+              <strong>Rank of Student:</strong> <span>{posdata.posi}</span>
+            </li>
+            <li>
+              <strong>Weakest Subject:</strong> <span>Mathematics</span>
+            </li>
+          </ul>
         </div>
         <br />
-        <h2>Teacher`s Feedback</h2>
+        <h2>Teacher's Feedback</h2>
         <Feedback />
         <Feedback />
         <Feedback />
@@ -93,31 +134,7 @@ function Resultpage() {
         <Feedback />
       </div>
     </div>
-  )
+  );
 }
 
 export default Resultpage;
-
-export async function resultloader() {
-  const itemStr = localStorage.getItem("userData");
-  const item = JSON.parse(itemStr);
-  const user = JSON.parse(item.value);
-
-  let resdata = await fetch(`https://www.takshilabackend.somee.com/api/Results/getquarterlyresult?username=${user.username}`);
-  var posdata=await fetch(`https://www.takshilabackend.somee.com/api/Results/position?username=${user.username}`);
-  posdata = await posdata.json();
-
-  resdata = await resdata.json();
-
-  const averagesArray = {};
-
-  resdata.forEach(subject => {
-    const { value } = subject;
-    const sum = Object.values(value).reduce((total, num) => total + (num || 0), 0);
-    const count = Object.values(value).filter(num => num != null).length;
-    const average = sum / count;
-    averagesArray[subject.key] = average;
-  });
-
-  return { posdata,resdata, averagesArray };
-}
