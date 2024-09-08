@@ -2,7 +2,7 @@
 import './App.css'
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import Landing from './landing/Landing'
 import UserRegistrationForm from './landing/Register'
 import UserLoginForm from './landing/login'
@@ -40,7 +40,10 @@ const router=createBrowserRouter([
 function App() {
   
   return (
+    <>
     <RouterProvider router={router}/>
+    <SpeedInsights />
+    </>
   )
 }
 
