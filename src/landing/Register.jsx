@@ -3,6 +3,8 @@ import './user.css';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Loader from '../components/StudentUI/Pages/Loader';
+import { useNavigate } from 'react-router-dom';
 
 // Define Zod schema for validation
 const SignUpSchema = z.object({
@@ -20,8 +22,17 @@ const SignUpSchema = z.object({
     .transform((val) => val.split(',').map(subject => subject.trim()))
 });
 
-
+const setItemWithExpiry = (key, value, ttl) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + ttl, // ttl is time to live in milliseconds
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+};
 const UserRegistrationForm = () => {
+  const [isLoading,setisLoading]=useState(false);
+  const navigate=useNavigate();
   // Set up react-hook-form with Zod validation
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(SignUpSchema),
@@ -29,35 +40,57 @@ const UserRegistrationForm = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
+    setisLoading(true);
 
     try {
+      // Start loading
+      setisLoading(true);
+    
+      // Make the API call
       const response = await fetch("https://www.takshilabackend.somee.com/api/Students/register", {
         method: 'POST',
         headers: {
-          "accept": "*/*",
+          "Accept": "application/json",  // Changed from */* to application/json
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          username: data.username,  // Assuming the email field is part of `data`
+          password: data.password,  // Assuming password is part of `data`
+          studname: data.studname,  // Adjust according to your form data structure
+          age: data.age,
+          stand: data.stand,
+          subjects: data.subjects,  // Should be an array
+        })
       });
-
+    
+      // Parse response data
       const responseData = await response.json();
       console.log('Response Data:', responseData);
-      if(response.ok)
-      {
-        setItemWithExpiry("userData",JSON.stringify(responseData),3600000);
-      }
-      if (!response.ok) {
+    
+      if (response.ok) {
+        // Store data in localStorage with an expiry time
+        setItemWithExpiry("userData", JSON.stringify(responseData), 3600000); // 1 hour expiry
+    
+        // Redirect to student page
+        navigate('/student');
+      } else {
+        // Handle server-side errors
         throw new Error(responseData.message || 'Registration failed. Please try again.');
       }
-
-      // Handle successful registration, e.g., redirect to another page
+    
     } catch (error) {
       console.error('Error:', error);
-      // Display an error notification to the user if needed
+    
+      // Display a user-friendly error message
+      setServerWarning('An error occurred during registration. Please try again.');
+    } finally {
+      // Stop loading after the request is completed
+      setisLoading(false);
     }
-  };
+      };
 
   return (
+    isLoading?<Loader/>:
     <div className='RegisterContainer'>
       <div className='register'>
         <div className="formCont">

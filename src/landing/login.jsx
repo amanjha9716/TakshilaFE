@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Loader from '../components/StudentUI/Pages/Loader';
 
 // Define Zod schema for validation
 const SignUpSchema = z.object({
@@ -15,6 +16,7 @@ const UserLoginForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [serverWarning, setServerWarning] = useState(''); // State for server warnings
+  const [loading, setLoading] = useState(false); // State for loading
 
   // Set up react-hook-form with Zod validation
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -24,6 +26,7 @@ const UserLoginForm = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   const setItemWithExpiry = (key, value, ttl) => {
     const now = new Date();
     const item = {
@@ -32,8 +35,10 @@ const UserLoginForm = () => {
     };
     localStorage.setItem(key, JSON.stringify(item));
   };
+
   // Handle form submission
   const onSubmit = async (data) => {
+    setLoading(true); // Start loading
     console.log(data);
 
     try {
@@ -48,8 +53,7 @@ const UserLoginForm = () => {
       console.log('Response Data:', responseData);
 
       if (response.ok) {
-        
-        setItemWithExpiry("userData",JSON.stringify(responseData),3600000);
+        setItemWithExpiry("userData", JSON.stringify(responseData), 3600000);
         navigate('/student');
       } else {
         // Handle server-side validation errors or incorrect credentials
@@ -58,10 +62,13 @@ const UserLoginForm = () => {
     } catch (error) {
       console.error('An error occurred:', error);
       setServerWarning('An unexpected error occurred. Please try again later.');
+    } finally {
+      setLoading(false); // Stop loading once the request is completed
     }
   };
 
   return (
+    loading ? <Loader /> : // Show loader while loading
     <div className='RegisterContainer'>
       <div className='register'>
         <div className="formCont">
@@ -83,18 +90,16 @@ const UserLoginForm = () => {
                 id="password"
                 {...register('password')}
               />
-
+            </div>
+            <br />
+            <input 
+              type="checkbox" 
+              checked={showPassword}
+              onChange={togglePasswordVisibility} 
+            />
+            {showPassword ? 'Hide' : 'Show'} Password
               
-                </div>
-                <br />
-                <input 
-                  type="checkbox" 
-                  checked={showPassword}
-                  onChange={togglePasswordVisibility} 
-                />
-                {showPassword ? 'Hide' : 'Show'} Password
-              
-              {errors.password && <p className="warning">{errors.password.message}</p>}
+            {errors.password && <p className="warning">{errors.password.message}</p>}
            
             {serverWarning && <p className="warning server-warning">{serverWarning}</p>} {/* Display server warning */}
             <button type="submit" style={{ 'marginTop': '1.4rem' }}>Login</button>
