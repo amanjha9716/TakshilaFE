@@ -32,7 +32,7 @@ const UserLoginForm = () => {
     const item = {
       value: value,
       expiry: now.getTime() + ttl, // ttl is time to live in milliseconds
-    };
+    }; 
     localStorage.setItem(key, JSON.stringify(item));
   };
 

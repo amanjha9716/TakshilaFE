@@ -3,6 +3,9 @@
     padding: 20px;
     width: 55%;
     padding-right: 0;
+    height: 100%;
+   
+
 }
 .second .header{
  width: 100%;
@@ -96,7 +99,7 @@ input {
     padding: 10px;
     background-color: #FFFFFA;
     width: 92%;
-    height: fit-content;
+    height: 40%;
 
     margin-top: 20px;
     border-radius: 20px;
@@ -159,10 +162,11 @@ progress {
     /* style rules */
   }
   .secondbot{
+    height: 40%;
     display: flex;
   }
   .notice{
-    width: 93%;
+    width: 100%;
     margin-top:10px ;
 
     background-color: #FFFFFA;
@@ -174,9 +178,10 @@ progress {
     
     margin-top: 10px;
     width: 43%;
+    height: 100%;
     margin-left:20px ;
     /* padding:20px ; */
-    height: 50%;
+    /* height: 50%; */
 
   }
   .notice li{
@@ -219,4 +224,129 @@ progress {
     background-color: #363d5b;
 
   }
-  
+  /* Default styles as provided */
+
+/* Small devices (mobile phones) */
+@media (max-width: 767px) {
+  .second {
+      width: 100%;
+      padding: 15px;
+  }
+
+  .second .header {
+      flex-direction: column;
+  }
+
+  .inp {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+
+  .header input {
+      width: 100%;
+  }
+
+  .nextclass, .notice, .notrew, .third {
+      width: 100%;
+
+  }
+  .nextclass, .notrew{
+    height: 100%;
+  }
+  .nextclass{
+    height: 100%;
+  }
+
+  .count {
+      left: 0;
+      top: 0;
+  }
+
+  .avarage, .marksgraph {
+      width: 100%;
+      margin-right: 0;
+  }
+
+  .charts {
+      grid-template-columns: 1fr;
+  }
+
+  .main-card {
+      grid-template-columns: 1fr;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .second {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+
+  .inp {
+      width: 70%;
+  }
+
+  .nextclass {
+      width: 60%;
+  }
+
+  .avarage, .marksgraph {
+      width: 100%;
+  }
+
+  .charts {
+      grid-template-columns: 1fr 1fr;
+  }
+
+  .main-card {
+      grid-template-columns: 1fr 1fr;
+  }
+
+  .third {
+      width: 50%;
+  }
+
+   .notrew {
+      width: 48%;
+  }
+ 
+}
+
+/* Large devices (desktops) */
+@media (min-width: 1024px) {
+  .second {
+      width: 55%;
+  }
+
+.notice{
+  height: 30%;
+  width: 85%;
+}
+  .inp {
+      width: 50%;
+  }
+
+  .main-card {
+      grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .charts {
+      grid-template-columns: 1fr 1fr;
+  }
+
+  .nextclass {
+      width: 40%;
+      height: 75%;
+  }
+
+   .notrew {
+      width: 50%;
+  }
+
+  .third {
+      width: 26%;
+  }
+}

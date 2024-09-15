@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState,Suspense } from 'react';
 import './learning.css';
 import img from '/baby.gif'; // Ensure this path is correct
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import ResourceCard from './ResourceCard';
 import { useLoaderData } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'; // Tanstack Query for data fetching
 import { fetchData } from '../../../util/http';
 import Loader from '../Loader';
-
+const ResourceCard=React.lazy(()=>import('./ResourceCard'));
 // Fetch your API_KEY
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -111,10 +110,18 @@ export default function LearningPath() {
           <button onClick={handleSubmit}>Search</button>
         </div>
         <div className="pdf">
+          <Suspense fallback={<Loader/>}>
           <ResourceCard resname={"only this one is working for now"} date={"2024-08-28"} totalstud={128} link={resourceURL} />
-          <ResourceCard resname={"chemistry ch-1"} date={"2024-08-28"} totalstud={128} link={"HTTP"} />
-          <ResourceCard resname={"chemistry ch-1"} date={"2024-08-28"} totalstud={128} link={"HTTP"} />
-        </div>
+
+          </Suspense>
+          <Suspense fallback={<Loader/>}>
+          <ResourceCard resname={"only this one is working for now"} date={"2024-08-28"} totalstud={128} link={resourceURL} />
+
+          </Suspense><Suspense fallback={<Loader/>}>
+          <ResourceCard resname={"only this one is working for now"} date={"2024-08-28"} totalstud={128} link={resourceURL} />
+
+          </Suspense>
+                </div>
         <div className="comasses">
           <p>Video Resources</p>
           <table className="completed-quizzes">

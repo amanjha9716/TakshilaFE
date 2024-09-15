@@ -7,28 +7,17 @@
     height: 100%;
     color: #333;
 }
-.left{
-  font-family: "poppins";
-  display: flex;
-  flex-direction: column;
-    width: 50%;
-    padding: 20px;
-    height: 50%;
-    background-color: white;
-    margin-left: 20px;
-    border-radius: 20px;
-    min-height: 90vh;
-    height: 100%;
-}
-.right
+
+.right,.left
 {
   font-family: "poppins";
   display: flex;
   flex-direction: column;
     width: 50%;
     justify-content: space-between;
-    /* padding: 20px; */
-    height: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+   background-color: white;
     margin-left: 20px;
     border-radius: 20px;
     min-height: 90vh;
@@ -37,7 +26,7 @@
 .policy{
   height: fit-content;
   background-color: white;
-  padding: 15px;
+
   border-radius: 20px;
   
 }
@@ -45,7 +34,7 @@
   margin-top: 15px;
   height: fit-content;
   background-color: white;
-  padding: 15px;
+
   border-radius: 20px;
 }
 .heading

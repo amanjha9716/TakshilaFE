@@ -6,7 +6,7 @@
     box-sizing: border-box;
     font-family: "poppins";
     overflow-y: hidden;
-    
+    height: 100vh;
       max-height: 100vh;
       overflow-y: hidden;
       overflow-x: hidden;
@@ -20,7 +20,11 @@
     border-radius: 20px;
     /* padding: 10px; */
     min-width: 17%;
-    height: fit-content;
+    /* height: fit-content; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 line{
     stroke: transparent;

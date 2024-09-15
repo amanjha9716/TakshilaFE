@@ -118,10 +118,13 @@ export default function TestPanel({ data, setIsComplete, setMarks, isComplete,te
           <>
             <div className="testinfo">
               <QuesGrid no={20} setQues={handleSetQues} quesind={quesind} anslist={anslist} />
+   <progress value={(quesind+1)*5} max={100} style={{width:'100%'}}>50%</progress>
+              
               <Colorptr />
             </div>
             <div className="quescont">
               <Question
+                key={quesind}
                 ques={data[quesind]}
                 option={data[quesind].options}
                 length={data.length}
